@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crow's Foot Notation Guide — D426</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+  :root {
+    --bg: #f5f6fa;
+    --card: #ffffff;
+    --card-border: #d4d8e3;
+    --accent: #2563eb;
+    --accent2: #d6336c;
+    --accent3: #0d9655;
+    --text: #1e2130;
+    --muted: #555d75;
+    --diagram-bg: #eef1f8;
+    --highlight-bg: #eef4ff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding: 2rem 1.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    color: var(--accent);
+  }
+
+  .subtitle {
+    color: var(--muted);
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid var(--card-border);
+    padding-bottom: 1.5rem;
+  }
+
+  .concept-box {
+    background: var(--card);
+    border: 2px solid var(--card-border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .concept-box h2 {
+    font-size: 1.1rem;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .concept-box p {
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+
+  .key-rule {
+    background: var(--highlight-bg);
+    border-left: 4px solid var(--accent);
+    padding: 0.75rem 1rem;
+    border-radius: 0 8px 8px 0;
+    margin-top: 0.75rem;
+    font-size: 0.9rem;
+  }
+
+  .key-rule strong { color: var(--accent); }
+
+  .section-heading {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: var(--text);
+    font-weight: 700;
+  }
+
+  /* Symbol Cards */
+  .symbols-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .symbol-card {
+    background: var(--card);
+    border: 2px solid var(--card-border);
+    border-radius: 12px;
+    padding: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .symbol-visual {
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--diagram-bg);
+    border-radius: 10px;
+  }
+
+  .symbol-visual svg { width: 60px; height: 60px; }
+
+  .symbol-info h3 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1rem;
+    color: var(--text);
+    margin-bottom: 0.25rem;
+  }
+
+  .symbol-info .meaning {
+    font-size: 0.95rem;
+    color: var(--accent2);
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+
+  .symbol-info .desc {
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+
+  /* Combination Cards */
+  .combos-section h2 {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    color: var(--text);
+  }
+  .combos-section .intro {
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+  }
+
+  .combo-card {
+    background: var(--card);
+    border: 2px solid var(--card-border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .combo-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .combo-svg-wrap {
+    flex-shrink: 0;
+    background: var(--diagram-bg);
+    border-radius: 8px;
+    padding: 4px;
+  }
+
+  .combo-label h3 {
+    font-size: 1rem;
+    font-weight: 700;
+  }
+  .combo-label .notation {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--accent);
+  }
+
+  .combo-explanation {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .combo-example {
+    background: var(--highlight-bg);
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+    color: var(--accent3);
+    font-weight: 500;
+    font-style: italic;
+  }
+
+  /* Reading direction */
+  .reading-section {
+    background: var(--card);
+    border: 2px solid var(--card-border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .reading-section h2 {
+    font-size: 1.15rem;
+    margin-bottom: 0.75rem;
+    color: var(--accent2);
+  }
+  .reading-section p {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+  .reading-section .diagram-container {
+    background: var(--diagram-bg);
+    border-radius: 8px;
+    padding: 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem 0;
+    overflow-x: auto;
+  }
+
+  /* Relationship examples */
+  .rel-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .rel-card {
+    background: var(--card);
+    border: 2px solid var(--card-border);
+    border-radius: 12px;
+    padding: 1.25rem;
+  }
+  .rel-card h3 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  .rel-card .rel-diagram {
+    background: var(--diagram-bg);
+    border-radius: 8px;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.75rem;
+    overflow-x: auto;
+  }
+  .rel-card .reading {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 0.25rem;
+  }
+  .rel-card .reading strong {
+    color: var(--accent);
+  }
+
+  /* Quiz */
+  .quiz-section { margin-top: 2rem; }
+  .quiz-section h2 {
+    font-size: 1.3rem;
+    margin-bottom: 0.25rem;
+    color: var(--text);
+  }
+  .quiz-intro {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  .score-bar {
+    background: var(--card);
+    border: 2px solid var(--card-border);
+    border-radius: 10px;
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  .score-bar .score-correct { color: var(--accent3); }
+  .score-bar .score-wrong { color: var(--accent2); }
+  .score-bar .score-remaining { color: var(--muted); }
+
+  .quiz-card {
+    background: var(--card);
+    border: 2px solid var(--card-border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  .quiz-card .q-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent);
+    margin-bottom: 0.25rem;
+  }
+  .quiz-card .q-text {
+    font-size: 0.95rem;
+    margin-bottom: 0.75rem;
+    font-weight: 500;
+  }
+  .quiz-card .q-diagram {
+    background: var(--diagram-bg);
+    border-radius: 8px;
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    overflow-x: auto;
+  }
+
+  .q-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+
+  .q-btn {
+    background: var(--diagram-bg);
+    border: 2px solid var(--card-border);
+    border-radius: 8px;
+    padding: 0.6rem 0.75rem;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: center;
+  }
+  .q-btn:hover:not(:disabled) { border-color: var(--accent); background: var(--highlight-bg); }
+  .q-btn.correct { background: #dcfce7; border-color: var(--accent3); color: #166534; font-weight: 600; }
+  .q-btn.wrong { background: #fce7f0; border-color: var(--accent2); color: #9f1239; }
+  .q-btn:disabled { cursor: default; }
+
+  .q-feedback {
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+    padding: 0.75rem;
+    border-radius: 8px;
+    display: none;
+  }
+  .q-feedback.show { display: block; }
+  .q-feedback.right { background: #dcfce7; color: #166534; }
+  .q-feedback.wrong-fb { background: #fce7f0; color: #9f1239; }
+
+  .reset-btn {
+    display: block;
+    margin: 1.5rem auto;
+    padding: 0.75rem 2rem;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .reset-btn:hover { opacity: 0.9; }
+
+  @media (min-width: 600px) {
+    .symbols-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Crow's Foot Notation</h1>
+<p class="subtitle">D426 Data Management Foundations — Visual Reference Guide</p>
+
+<!-- Concept overview -->
+<div class="concept-box">
+  <h2>What Is Crow's Foot Notation?</h2>
+  <p>Crow's foot notation is a way to show <strong style="color:var(--text)">cardinality</strong> (maximum) and <strong style="color:var(--text)">modality</strong> (minimum) of relationships in an ER diagram. It uses three simple symbols placed at each end of a relationship line.</p>
+  <div class="key-rule">
+    <strong>Key OA rule:</strong> The <em>outer</em> symbol (farthest from the entity box) = <strong>maximum</strong> (cardinality). The <em>inner</em> symbol (closest to the entity box) = <strong>minimum</strong> (modality).
+  </div>
+</div>
+
+<!-- Three base symbols -->
+<h2 class="section-heading">The Three Base Symbols</h2>
+<div class="symbols-grid">
+
+  <div class="symbol-card">
+    <div class="symbol-visual">
+      <svg viewBox="0 0 60 60">
+        <circle cx="30" cy="30" r="14" fill="none" stroke="#2563eb" stroke-width="3"/>
+      </svg>
+    </div>
+    <div class="symbol-info">
+      <div class="meaning">Zero</div>
+      <h3>○ Circle</h3>
+      <div class="desc">Means "zero" — the relationship is <strong style="color:var(--text)">optional</strong>. Used as an inner symbol (minimum).</div>
+    </div>
+  </div>
+
+  <div class="symbol-card">
+    <div class="symbol-visual">
+      <svg viewBox="0 0 60 60">
+        <line x1="30" y1="16" x2="30" y2="44" stroke="#d6336c" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="symbol-info">
+      <div class="meaning">One</div>
+      <h3>| Short Line (Bar)</h3>
+      <div class="desc">Means "one" — exactly one instance. Can be outer (max=1) or inner (min=1, mandatory).</div>
+    </div>
+  </div>
+
+  <div class="symbol-card">
+    <div class="symbol-visual">
+      <svg viewBox="0 0 60 60">
+        <line x1="14" y1="30" x2="42" y2="30" stroke="#0d9655" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="42" y1="30" x2="28" y2="15" stroke="#0d9655" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="42" y1="30" x2="28" y2="45" stroke="#0d9655" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="symbol-info">
+      <div class="meaning">Many</div>
+      <h3>⋔ Crow's Foot (Fork)</h3>
+      <div class="desc">Means "many" — one or more (no upper limit). Used as an outer symbol (max=many). This is the namesake!</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Four Combinations -->
+<div class="combos-section">
+  <h2>The Four Combinations You Must Know</h2>
+  <p class="intro">Each end of a relationship line gets a pair: outer symbol (max) + inner symbol (min). There are four possible pairs:</p>
+
+  <div class="combo-card">
+    <div class="combo-header">
+      <div class="combo-svg-wrap">
+        <svg width="100" height="50" viewBox="0 0 100 50">
+          <line x1="10" y1="25" x2="90" y2="25" stroke="#888" stroke-width="2"/>
+          <line x1="30" y1="10" x2="30" y2="40" stroke="#d6336c" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="42" y1="10" x2="42" y2="40" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round"/>
+          <text x="30" y="48" fill="#d6336c" font-size="7" text-anchor="middle" font-family="JetBrains Mono">max</text>
+          <text x="42" y="48" fill="#2563eb" font-size="7" text-anchor="middle" font-family="JetBrains Mono">min</text>
+        </svg>
+      </div>
+      <div class="combo-label">
+        <h3>Exactly One (One and only one)</h3>
+        <div class="notation">||  — bar + bar — min: 1, max: 1</div>
+      </div>
+    </div>
+    <div class="combo-explanation">The entity <strong>must</strong> participate (min=1) and can relate to <strong>at most one</strong> instance (max=1). Mandatory, single.</div>
+    <div class="combo-example">Example: "A salesperson works in exactly one office."</div>
+  </div>
+
+  <div class="combo-card">
+    <div class="combo-header">
+      <div class="combo-svg-wrap">
+        <svg width="100" height="50" viewBox="0 0 100 50">
+          <line x1="10" y1="25" x2="90" y2="25" stroke="#888" stroke-width="2"/>
+          <line x1="30" y1="10" x2="30" y2="40" stroke="#d6336c" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="46" cy="25" r="8" fill="none" stroke="#2563eb" stroke-width="2.5"/>
+          <text x="30" y="48" fill="#d6336c" font-size="7" text-anchor="middle" font-family="JetBrains Mono">max</text>
+          <text x="46" y="48" fill="#2563eb" font-size="7" text-anchor="middle" font-family="JetBrains Mono">min</text>
+        </svg>
+      </div>
+      <div class="combo-label">
+        <h3>Zero or One (Optional single)</h3>
+        <div class="notation">|○  — bar + circle — min: 0, max: 1</div>
+      </div>
+    </div>
+    <div class="combo-explanation">The entity <strong>may or may not</strong> participate (min=0), but if it does, at most <strong>one</strong> instance (max=1). Optional, single.</div>
+    <div class="combo-example">Example: "An office may be occupied by zero or one salesperson."</div>
+  </div>
+
+  <div class="combo-card">
+    <div class="combo-header">
+      <div class="combo-svg-wrap">
+        <svg width="100" height="50" viewBox="0 0 100 50">
+          <line x1="10" y1="25" x2="90" y2="25" stroke="#888" stroke-width="2"/>
+          <line x1="30" y1="25" x2="18" y2="8" stroke="#d6336c" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="30" y1="25" x2="18" y2="42" stroke="#d6336c" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="42" y1="10" x2="42" y2="40" stroke="#2563eb" stroke-width="2.5" stroke-linecap="round"/>
+          <text x="24" y="48" fill="#d6336c" font-size="7" text-anchor="middle" font-family="JetBrains Mono">max</text>
+          <text x="42" y="48" fill="#2563eb" font-size="7" text-anchor="middle" font-family="JetBrains Mono">min</text>
+        </svg>
+      </div>
+      <div class="combo-label">
+        <h3>One or Many (Mandatory many)</h3>
+        <div class="notation">⋔|  — crow's foot + bar — min: 1, max: many</div>
+      </div>
+    </div>
+    <div class="combo-explanation">The entity <strong>must</strong> participate (min=1) and can relate to <strong>many</strong> instances (max=many). Mandatory, multiple.</div>
+    <div class="combo-example">Example: "A department must have at least one employee (and can have many)."</div>
+  </div>
+
+  <div class="combo-card">
+    <div class="combo-header">
+      <div class="combo-svg-wrap">
+        <svg width="100" height="50" viewBox="0 0 100 50">
+          <line x1="10" y1="25" x2="90" y2="25" stroke="#888" stroke-width="2"/>
+          <line x1="30" y1="25" x2="18" y2="8" stroke="#d6336c" stroke-width="2.5" stroke-linecap="round"/>
+          <line x1="30" y1="25" x2="18" y2="42" stroke="#d6336c" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="46" cy="25" r="8" fill="none" stroke="#2563eb" stroke-width="2.5"/>
+          <text x="24" y="48" fill="#d6336c" font-size="7" text-anchor="middle" font-family="JetBrains Mono">max</text>
+          <text x="46" y="48" fill="#2563eb" font-size="7" text-anchor="middle" font-family="JetBrains Mono">min</text>
+        </svg>
+      </div>
+      <div class="combo-label">
+        <h3>Zero or Many (Optional many)</h3>
+        <div class="notation">⋔○  — crow's foot + circle — min: 0, max: many</div>
+      </div>
+    </div>
+    <div class="combo-explanation">The entity <strong>may or may not</strong> participate (min=0), and if it does, can relate to <strong>many</strong> instances (max=many). Optional, multiple.</div>
+    <div class="combo-example">Example: "A salesperson may have zero customers, or many customers."</div>
+  </div>
+</div>
+
+<!-- How to read -->
+<div class="reading-section">
+  <h2>How to Read a Crow's Foot Diagram</h2>
+  <p>Always read <strong style="color:var(--text)">from one entity toward the other</strong>. The symbols you encounter at the <em>far end</em> (next to the other entity) tell you how many of that entity relate to the one you started from.</p>
+  <div class="diagram-container">
+    <svg width="420" height="90" viewBox="0 0 420 90">
+      <rect x="5" y="25" width="110" height="40" rx="6" fill="#eef1f8" stroke="#2563eb" stroke-width="1.5"/>
+      <text x="60" y="50" fill="#1e2130" font-size="13" text-anchor="middle" font-family="DM Sans" font-weight="700">SALESPERSON</text>
+      <rect x="305" y="25" width="110" height="40" rx="6" fill="#eef1f8" stroke="#d6336c" stroke-width="1.5"/>
+      <text x="360" y="50" fill="#1e2130" font-size="13" text-anchor="middle" font-family="DM Sans" font-weight="700">CUSTOMER</text>
+      <line x1="115" y1="45" x2="305" y2="45" stroke="#888" stroke-width="2"/>
+      <line x1="130" y1="30" x2="130" y2="60" stroke="#d6336c" stroke-width="2" stroke-linecap="round"/>
+      <line x1="140" y1="30" x2="140" y2="60" stroke="#2563eb" stroke-width="2" stroke-linecap="round"/>
+      <line x1="290" y1="45" x2="303" y2="28" stroke="#d6336c" stroke-width="2" stroke-linecap="round"/>
+      <line x1="290" y1="45" x2="303" y2="62" stroke="#d6336c" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="278" cy="45" r="7" fill="none" stroke="#2563eb" stroke-width="2"/>
+      <text x="210" y="38" fill="#555d75" font-size="10" text-anchor="middle" font-family="DM Sans">Sells to / Buys from</text>
+      <text x="210" y="80" fill="#0d9655" font-size="10" text-anchor="middle" font-family="JetBrains Mono">→ Read symbols at the FAR end ←</text>
+    </svg>
+  </div>
+  <p>→ Reading left to right: A salesperson sells to <strong style="color:var(--accent2)">zero or many</strong> customers (look at the symbols next to CUSTOMER).</p>
+  <p>← Reading right to left: A customer buys from <strong style="color:var(--accent)">exactly one</strong> salesperson (look at the symbols next to SALESPERSON).</p>
+  <p style="margin-top:0.5rem;">This makes it a <strong style="color:var(--text)">one-to-many (1:M)</strong> relationship.</p>
+</div>
+
+<!-- Three relationship types -->
+<h2 class="section-heading">The Three Relationship Types</h2>
+<div class="rel-grid">
+
+  <div class="rel-card">
+    <h3 style="color:var(--accent);">One-to-One (1:1)</h3>
+    <div class="rel-diagram">
+      <svg width="350" height="70" viewBox="0 0 350 70">
+        <rect x="5" y="15" width="100" height="40" rx="6" fill="#eef1f8" stroke="#2563eb" stroke-width="1.5"/>
+        <text x="55" y="40" fill="#1e2130" font-size="12" text-anchor="middle" font-family="DM Sans" font-weight="600">EMPLOYEE</text>
+        <rect x="245" y="15" width="100" height="40" rx="6" fill="#eef1f8" stroke="#d6336c" stroke-width="1.5"/>
+        <text x="295" y="40" fill="#1e2130" font-size="12" text-anchor="middle" font-family="DM Sans" font-weight="600">OFFICE</text>
+        <line x1="105" y1="35" x2="245" y2="35" stroke="#888" stroke-width="2"/>
+        <line x1="118" y1="22" x2="118" y2="48" stroke="#d6336c" stroke-width="2"/>
+        <line x1="128" y1="22" x2="128" y2="48" stroke="#2563eb" stroke-width="2"/>
+        <line x1="232" y1="22" x2="232" y2="48" stroke="#d6336c" stroke-width="2"/>
+        <circle cx="220" cy="35" r="6" fill="none" stroke="#2563eb" stroke-width="2"/>
+      </svg>
+    </div>
+    <div class="reading"><strong>→</strong> An employee works in <strong>exactly one</strong> office.</div>
+    <div class="reading"><strong>←</strong> An office is occupied by <strong>zero or one</strong> employee.</div>
+  </div>
+
+  <div class="rel-card">
+    <h3 style="color:var(--accent2);">One-to-Many (1:M)</h3>
+    <div class="rel-diagram">
+      <svg width="350" height="70" viewBox="0 0 350 70">
+        <rect x="5" y="15" width="100" height="40" rx="6" fill="#eef1f8" stroke="#2563eb" stroke-width="1.5"/>
+        <text x="55" y="40" fill="#1e2130" font-size="12" text-anchor="middle" font-family="DM Sans" font-weight="600">DEPARTMENT</text>
+        <rect x="245" y="15" width="100" height="40" rx="6" fill="#eef1f8" stroke="#d6336c" stroke-width="1.5"/>
+        <text x="295" y="40" fill="#1e2130" font-size="12" text-anchor="middle" font-family="DM Sans" font-weight="600">EMPLOYEE</text>
+        <line x1="105" y1="35" x2="245" y2="35" stroke="#888" stroke-width="2"/>
+        <line x1="118" y1="22" x2="118" y2="48" stroke="#d6336c" stroke-width="2"/>
+        <line x1="128" y1="22" x2="128" y2="48" stroke="#2563eb" stroke-width="2"/>
+        <line x1="237" y1="35" x2="245" y2="20" stroke="#d6336c" stroke-width="2" stroke-linecap="round"/>
+        <line x1="237" y1="35" x2="245" y2="50" stroke="#d6336c" stroke-width="2" stroke-linecap="round"/>
+        <line x1="225" y1="22" x2="225" y2="48" stroke="#2563eb" stroke-width="2"/>
+      </svg>
+    </div>
+    <div class="reading"><strong>→</strong> A department has <strong>one or many</strong> employees.</div>
+    <div class="reading"><strong>←</strong> An employee belongs to <strong>exactly one</strong> department.</div>
+  </div>
+
+  <div class="rel-card">
+    <h3 style="color:var(--accent3);">Many-to-Many (M:M)</h3>
+    <div class="rel-diagram">
+      <svg width="350" height="70" viewBox="0 0 350 70">
+        <rect x="5" y="15" width="100" height="40" rx="6" fill="#eef1f8" stroke="#2563eb" stroke-width="1.5"/>
+        <text x="55" y="40" fill="#1e2130" font-size="12" text-anchor="middle" font-family="DM Sans" font-weight="600">STUDENT</text>
+        <rect x="245" y="15" width="100" height="40" rx="6" fill="#eef1f8" stroke="#d6336c" stroke-width="1.5"/>
+        <text x="295" y="40" fill="#1e2130" font-size="12" text-anchor="middle" font-family="DM Sans" font-weight="600">COURSE</text>
+        <line x1="105" y1="35" x2="245" y2="35" stroke="#888" stroke-width="2"/>
+        <line x1="118" y1="35" x2="108" y2="20" stroke="#d6336c" stroke-width="2" stroke-linecap="round"/>
+        <line x1="118" y1="35" x2="108" y2="50" stroke="#d6336c" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="130" cy="35" r="6" fill="none" stroke="#2563eb" stroke-width="2"/>
+        <line x1="237" y1="35" x2="245" y2="20" stroke="#d6336c" stroke-width="2" stroke-linecap="round"/>
+        <line x1="237" y1="35" x2="245" y2="50" stroke="#d6336c" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="225" cy="35" r="6" fill="none" stroke="#2563eb" stroke-width="2"/>
+      </svg>
+    </div>
+    <div class="reading"><strong>→</strong> A student enrolls in <strong>zero or many</strong> courses.</div>
+    <div class="reading"><strong>←</strong> A course is taken by <strong>zero or many</strong> students.</div>
+  </div>
+
+</div>
+
+<!-- QUIZ -->
+<div class="quiz-section">
+  <h2>Test Yourself — 15 Questions</h2>
+  <p class="quiz-intro">Click an answer. Green = correct, pink = incorrect. Your score is tracked at the top.</p>
+  <div class="score-bar" id="scoreBar">
+    <span class="score-correct" id="scoreCorrect">Correct: 0</span>
+    <span class="score-wrong" id="scoreWrong">Wrong: 0</span>
+    <span class="score-remaining" id="scoreRemain">Remaining: 15</span>
+  </div>
+  <div id="quizContainer"></div>
+  <button class="reset-btn" onclick="resetQuiz()">Reset Quiz</button>
+</div>
+
+<script>
+const allQuestions = [
+  {
+    q: "1. In crow's foot notation, what does the circle (○) represent?",
+    opts: ["One","Zero","Many","Mandatory"],
+    correct: 1,
+    right: "The circle means zero — the relationship is optional.",
+    wrong: "The circle represents zero, meaning the relationship is optional."
+  },
+  {
+    q: "2. Which symbol pair means \"zero or many\"?",
+    opts: ["Bar + Bar ( || )","Bar + Circle ( |○ )","Crow's foot + Circle ( ⋔○ )","Crow's foot + Bar ( ⋔| )"],
+    correct: 2,
+    right: "Crow's foot (many) as the outer/max + circle (zero) as the inner/min = zero or many.",
+    wrong: "The answer is crow's foot + circle (⋔○). Crow's foot = max many, circle = min zero."
+  },
+  {
+    q: "3. The \"outer\" symbol (farthest from the entity) represents:",
+    opts: ["Minimum (modality)","Maximum (cardinality)","Primary key","Entity type"],
+    correct: 1,
+    right: "The outer symbol = cardinality = maximum. The inner symbol = modality = minimum.",
+    wrong: "The outer symbol is the maximum (cardinality). The inner symbol (closer to the entity) is the minimum (modality)."
+  },
+  {
+    q: "4. If you see || on one side and ⋔○ on the other, what type of relationship is this?",
+    opts: ["One-to-One (1:1)","One-to-Many (1:M)","Many-to-Many (M:M)","Unary"],
+    correct: 1,
+    right: "One side has max=1, the other has max=many — that's a 1:M relationship.",
+    wrong: "It's One-to-Many (1:M). The || side has max=1, and the ⋔○ side has max=many."
+  },
+  {
+    q: "5. \"Modality\" is another word for:",
+    opts: ["Relationship minimum","Relationship maximum","Entity type","Attribute"],
+    correct: 0,
+    right: "Modality = relationship minimum. Cardinality = relationship maximum.",
+    wrong: "Modality means relationship minimum — the least number of instances required."
+  },
+  {
+    q: "6. \"Cardinality\" refers to:",
+    opts: ["The minimum number of entity instances in a relationship","The maximum number of entity instances in a relationship","The total number of entities in a database","The number of attributes an entity has"],
+    correct: 1,
+    right: "Cardinality = the maximum number of instances of one entity that can relate to a single instance of another.",
+    wrong: "Cardinality is the relationship maximum — the greatest number of instances that can participate."
+  },
+  {
+    q: "7. A bar (|) used as the INNER symbol (closest to the entity) means:",
+    opts: ["The relationship is optional","The entity must participate (mandatory)","There can be many instances","The entity is weak"],
+    correct: 1,
+    right: "An inner bar means min=1, so participation is mandatory — at least one is required.",
+    wrong: "An inner bar = min of 1, meaning the entity must participate. It's mandatory."
+  },
+  {
+    q: "8. A circle (○) used as the INNER symbol means:",
+    opts: ["Exactly one","Mandatory participation","Optional participation (min = 0)","Many instances"],
+    correct: 2,
+    right: "Inner circle = min of 0, meaning participation is optional.",
+    wrong: "The inner circle means the minimum is zero — participation is optional."
+  },
+  {
+    q: "9. Which notation represents \"exactly one\" (one and only one)?",
+    opts: ["Crow's foot + bar ( ⋔| )","Circle + bar ( ○| )","Bar + bar ( || )","Crow's foot + circle ( ⋔○ )"],
+    correct: 2,
+    right: "Bar + bar means max=1 (outer bar) and min=1 (inner bar) — exactly one.",
+    wrong: "Bar + bar ( || ) = max 1 and min 1, which means exactly one."
+  },
+  {
+    q: "10. If both sides of a relationship have crow's foot symbols as their outer symbol, the relationship is:",
+    opts: ["One-to-One (1:1)","One-to-Many (1:M)","Many-to-Many (M:M)","Identifying"],
+    correct: 2,
+    right: "Crow's foot on both sides = max many on both sides = M:M.",
+    wrong: "When both outer symbols are crow's feet, both maximums are 'many' — that's Many-to-Many."
+  },
+  {
+    q: "11. In this diagram, reading LEFT to RIGHT, how many Offices can a Salesperson work in?",
+    hasDiagram: "1to1",
+    opts: ["Zero or one","Exactly one","Zero or many","One or many"],
+    correct: 1,
+    right: "The symbols next to OFFICE (the far end) are bar + bar = exactly one.",
+    wrong: "Look at the symbols next to OFFICE (the far end). Bar + bar (||) = exactly one."
+  },
+  {
+    q: "12. What does the crow's foot symbol look like?",
+    opts: ["A circle","A single vertical bar","Three lines that fan out like a bird's foot","A diamond"],
+    correct: 2,
+    right: "The crow's foot is three lines that fan out, resembling a bird's foot. That's where the name comes from!",
+    wrong: "The crow's foot is three short lines that fan out like a bird's foot — hence the name."
+  },
+  {
+    q: "13. Which combination means \"one or many\" (mandatory, multiple)?",
+    opts: ["Bar + circle ( |○ )","Crow's foot + bar ( ⋔| )","Bar + bar ( || )","Crow's foot + circle ( ⋔○ )"],
+    correct: 1,
+    right: "Crow's foot (max=many) + bar (min=1) = one or many. Mandatory participation with no upper limit.",
+    wrong: "Crow's foot + bar ( ⋔| ) means max=many and min=1 — at least one, possibly many."
+  },
+  {
+    q: "14. A binary relationship involves how many entity types?",
+    opts: ["One","Two","Three","Four"],
+    correct: 1,
+    right: "Binary = two entity types. Unary = one (self-referencing). Ternary = three.",
+    wrong: "Binary means two entity types. Think 'bi' = two."
+  },
+  {
+    q: "15. If the inner symbol is a circle and the outer symbol is a bar, a given instance of this entity:",
+    opts: ["Must relate to exactly one instance of the other entity","May relate to zero or one instance of the other entity","Must relate to many instances of the other entity","May relate to zero or many instances of the other entity"],
+    correct: 1,
+    right: "Outer bar = max 1, inner circle = min 0. So: zero or one. Optional, at most one.",
+    wrong: "Bar (max=1) + circle (min=0) = zero or one. The entity may or may not participate, but at most one."
+  }
+];
+
+let scoreRight = 0, scoreWrong = 0, total = allQuestions.length;
+
+function buildQuiz() {
+  const container = document.getElementById('quizContainer');
+  container.innerHTML = '';
+  allQuestions.forEach((q, i) => {
+    const card = document.createElement('div');
+    card.className = 'quiz-card';
+    card.id = 'q' + i;
+
+    let diagramHTML = '';
+    if (q.hasDiagram === '1to1') {
+      diagramHTML = `<div class="q-diagram">
+        <svg width="350" height="70" viewBox="0 0 350 70">
+          <rect x="5" y="15" width="110" height="40" rx="6" fill="#eef1f8" stroke="#2563eb" stroke-width="1.5"/>
+          <text x="60" y="40" fill="#1e2130" font-size="11" text-anchor="middle" font-family="DM Sans" font-weight="600">SALESPERSON</text>
+          <rect x="240" y="15" width="100" height="40" rx="6" fill="#eef1f8" stroke="#d6336c" stroke-width="1.5"/>
+          <text x="290" y="40" fill="#1e2130" font-size="12" text-anchor="middle" font-family="DM Sans" font-weight="600">OFFICE</text>
+          <line x1="115" y1="35" x2="240" y2="35" stroke="#888" stroke-width="2"/>
+          <line x1="128" y1="22" x2="128" y2="48" stroke="#d6336c" stroke-width="2"/>
+          <line x1="138" y1="22" x2="138" y2="48" stroke="#2563eb" stroke-width="2"/>
+          <line x1="227" y1="22" x2="227" y2="48" stroke="#d6336c" stroke-width="2"/>
+          <circle cx="215" cy="35" r="6" fill="none" stroke="#2563eb" stroke-width="2"/>
+          <text x="178" y="28" fill="#555d75" font-size="9" text-anchor="middle" font-family="DM Sans">Works in</text>
+        </svg>
+      </div>`;
+    }
+
+    let optsHTML = q.opts.map((o, oi) =>
+      `<button class="q-btn" data-qi="${i}" data-oi="${oi}" onclick="handleAnswer(this,${i},${oi})">${o}</button>`
+    ).join('');
+
+    card.innerHTML = `
+      <div class="q-num">QUESTION ${i+1} of ${total}</div>
+      <div class="q-text">${q.q}</div>
+      ${diagramHTML}
+      <div class="q-options">${optsHTML}</div>
+      <div class="q-feedback" id="q${i}-fb"></div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function handleAnswer(btn, qi, oi) {
+  const q = allQuestions[qi];
+  const card = document.getElementById('q' + qi);
+  const buttons = card.querySelectorAll('.q-btn');
+  const isCorrect = oi === q.correct;
+
+  buttons.forEach(b => b.disabled = true);
+
+  if (isCorrect) {
+    btn.classList.add('correct');
+    scoreRight++;
+  } else {
+    btn.classList.add('wrong');
+    buttons[q.correct].classList.add('correct');
+    scoreWrong++;
+  }
+
+  const fb = document.getElementById('q' + qi + '-fb');
+  fb.textContent = isCorrect ? '✓ ' + q.right : '✗ ' + q.wrong;
+  fb.className = 'q-feedback show ' + (isCorrect ? 'right' : 'wrong-fb');
+
+  updateScore();
+}
+
+function updateScore() {
+  document.getElementById('scoreCorrect').textContent = 'Correct: ' + scoreRight;
+  document.getElementById('scoreWrong').textContent = 'Wrong: ' + scoreWrong;
+  document.getElementById('scoreRemain').textContent = 'Remaining: ' + (total - scoreRight - scoreWrong);
+}
+
+function resetQuiz() {
+  scoreRight = 0;
+  scoreWrong = 0;
+  updateScore();
+  buildQuiz();
+  window.scrollTo({ top: document.querySelector('.quiz-section').offsetTop - 20, behavior: 'smooth' });
+}
+
+buildQuiz();
+</script>
+
+</body>
+</html>
