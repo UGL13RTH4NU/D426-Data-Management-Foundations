@@ -8,7 +8,7 @@ These are free, self-contained HTML quizzes and visual guides that run in any br
 
 | File | Type | Topic |
 |------|------|-------|
-| [Crow's Foot Notation Guide](crows_foot_notation_guide.html) | Guide + Quiz | Crow's foot symbols, cardinality & modality, reading ER diagrams (15 questions) |
+| [Crow's Foot Notation Guide](https://ugl13rth4nu.github.io/D426-Data-Management-Foundations/crows_foot_notation_guide.html) | Guide + Quiz | Crow's foot symbols, cardinality & modality, reading ER diagrams (15 questions) |
 
 *More quizzes and Anki decks will be added as the course progresses.*
 
