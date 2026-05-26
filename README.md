@@ -4,6 +4,8 @@ Study materials for **WGU D426 — Data Management Foundations**, based on *Fund
 
 These are free, self-contained HTML quizzes and visual guides that run in any browser — no installation needed. An Anki deck is also available for download.
 
+Please note: as time changes, so does the material from WGU, while this may be current as of its creation date - May 2026 - as time goes on, it will become outdated and less useful. So take note of the creation date whenever you happen to stumble accross this repo and use the information herein at your own discretion.
+
 ## 📋 What's Here
 
 ### Interactive Guides & Quizzes
