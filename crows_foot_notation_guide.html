@@ -382,7 +382,7 @@
   <h2>What Is Crow's Foot Notation?</h2>
   <p>Crow's foot notation is a way to show <strong style="color:var(--text)">cardinality</strong> (maximum) and <strong style="color:var(--text)">modality</strong> (minimum) of relationships in an ER diagram. It uses three simple symbols placed at each end of a relationship line.</p>
   <div class="key-rule">
-    <strong>Key OA rule:</strong> The <em>outer</em> symbol (farthest from the entity box) = <strong>minimum</strong> (modality). The <em>inner</em> symbol (closest to the entity box) = <strong>maximum</strong> (cardinality).
+    <strong>Key OA rule:</strong> The <em>outer</em> symbol (closest to the entity box) = <strong>maximum</strong> (cardinality). The <em>inner</em> symbol (farthest from the entity box, toward the center of the line) = <strong>minimum</strong> (modality).
   </div>
 </div>
 
@@ -642,11 +642,11 @@ const allQuestions = [
     wrong: "The answer is crow's foot + circle (⋔○). Crow's foot = max many, circle = min zero."
   },
   {
-    q: "3. The \"outer\" symbol (farthest from the entity) represents:",
+    q: "3. The \"outer\" symbol (closest to the entity) represents:",
     opts: ["Minimum (modality)","Maximum (cardinality)","Primary key","Entity type"],
     correct: 1,
     right: "The outer symbol = cardinality = maximum. The inner symbol = modality = minimum.",
-    wrong: "The outer symbol is the maximum (cardinality). The inner symbol (closer to the entity) is the minimum (modality)."
+    wrong: "The outer symbol is the maximum (cardinality). The inner symbol (farther from the entity, toward center) is the minimum (modality)."
   },
   {
     q: "4. If you see || on one side and ⋔○ on the other, what type of relationship is this?",
@@ -670,7 +670,7 @@ const allQuestions = [
     wrong: "Cardinality is the relationship maximum — the greatest number of instances that can participate."
   },
   {
-    q: "7. A bar (|) used as the INNER symbol (closest to the entity) means:",
+    q: "7. A bar (|) used as the INNER symbol (farthest from the entity, toward center) means:",
     opts: ["The relationship is optional","The entity must participate (mandatory)","There can be many instances","The entity is weak"],
     correct: 1,
     right: "An inner bar means min=1, so participation is mandatory — at least one is required.",
@@ -755,9 +755,9 @@ function buildQuiz() {
           <text x="290" y="40" fill="#1e2130" font-size="12" text-anchor="middle" font-family="DM Sans" font-weight="600">OFFICE</text>
           <line x1="115" y1="35" x2="240" y2="35" stroke="#888" stroke-width="2"/>
           <line x1="128" y1="22" x2="128" y2="48" stroke="#d6336c" stroke-width="2"/>
-          <line x1="138" y1="22" x2="138" y2="48" stroke="#2563eb" stroke-width="2"/>
+          <circle cx="140" cy="35" r="6" fill="none" stroke="#2563eb" stroke-width="2"/>
           <line x1="227" y1="22" x2="227" y2="48" stroke="#d6336c" stroke-width="2"/>
-          <circle cx="215" cy="35" r="6" fill="none" stroke="#2563eb" stroke-width="2"/>
+          <line x1="217" y1="22" x2="217" y2="48" stroke="#2563eb" stroke-width="2"/>
           <text x="178" y="28" fill="#555d75" font-size="9" text-anchor="middle" font-family="DM Sans">Works in</text>
         </svg>
       </div>`;
